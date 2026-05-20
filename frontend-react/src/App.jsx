@@ -2,26 +2,26 @@ import "./App.css";
 
 const boxes = [
   {
-    name: "CS2 Skins",
-    price: "$5",
+    name: "Skiny CS2",
+    price: "25 zł",
     image:
       "https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=1200&auto=format&fit=crop",
   },
   {
-    name: "Luxury Perfumes",
-    price: "$20",
+    name: "Luksusowe Perfumy",
+    price: "80 zł",
     image:
       "https://images.unsplash.com/photo-1594035910387-fea47794261f?q=80&w=1200&auto=format&fit=crop",
   },
   {
-    name: "Electronics",
-    price: "$50",
+    name: "Elektronika",
+    price: "250 zł",
     image:
       "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1200&auto=format&fit=crop",
   },
   {
-    name: "Super Cars",
-    price: "$250",
+    name: "Super Auta",
+    price: "1200 zł",
     image:
       "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?q=80&w=1200&auto=format&fit=crop",
   },
@@ -34,15 +34,17 @@ function App() {
         <h1>LOOTBOX</h1>
 
         <div className="nav-right">
-          <div className="balance">$12,450</div>
-          <button className="deposit-btn">Deposit</button>
+          <div className="balance">12 450 zł</div>
+          <button className="deposit-btn">Doładuj</button>
         </div>
       </nav>
 
       <section className="hero">
-        <h2>Open Premium Mystery Boxes</h2>
+        <h2>Otwieraj Premium Skrzynki</h2>
+
         <p>
-          Win skins, perfumes, electronics, sneakers, watches and even cars.
+          Wygrywaj skiny CS2, perfumy, elektronikę,
+          sneakersy, zegarki i nawet auta.
         </p>
       </section>
 
@@ -56,7 +58,7 @@ function App() {
               <span>{box.price}</span>
             </div>
 
-            <button>Open Box</button>
+            <button>Otwórz Skrzynkę</button>
           </div>
         ))}
       </section>
