@@ -1,4 +1,5 @@
 import "./App.css";
+import { useState } from "react";
 
 const boxes = [
   {
@@ -27,7 +28,34 @@ const boxes = [
   },
 ];
 
+const rewards = [
+  "AK-47 Neon Rider",
+  "iPhone 15 Pro",
+  "Mercedes AMG",
+  "Dior Sauvage",
+  "Rolex Submariner",
+  "AWP Dragon Lore",
+  "PlayStation 5",
+  "BMW M4",
+];
+
 function App() {
+  const [opening, setOpening] = useState(false);
+  const [reward, setReward] = useState("");
+
+  const openBox = () => {
+    setOpening(true);
+    setReward("");
+
+    setTimeout(() => {
+      const randomReward =
+        rewards[Math.floor(Math.random() * rewards.length)];
+
+      setReward(randomReward);
+      setOpening(false);
+    }, 3000);
+  };
+
   return (
     <div className="app">
       <nav className="navbar">
@@ -48,6 +76,20 @@ function App() {
         </p>
       </section>
 
+      {opening && (
+        <div className="opening-screen">
+          <div className="spinner"></div>
+          <h2>Otwieranie skrzynki...</h2>
+        </div>
+      )}
+
+      {reward && (
+        <div className="reward-popup">
+          <h2>🎉 Wygrałeś:</h2>
+          <h1>{reward}</h1>
+        </div>
+      )}
+
       <section className="boxes-grid">
         {boxes.map((box, index) => (
           <div className="box-card" key={index}>
@@ -58,7 +100,9 @@ function App() {
               <span>{box.price}</span>
             </div>
 
-            <button>Otwórz Skrzynkę</button>
+            <button onClick={openBox}>
+              Otwórz Skrzynkę
+            </button>
           </div>
         ))}
       </section>
