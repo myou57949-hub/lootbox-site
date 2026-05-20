@@ -1,87 +1,67 @@
-import React, { useState } from "react";
+import "./App.css";
 
-const cases = [
+const boxes = [
   {
-    name: "Luxury Box",
-    price: 50,
-    items: ["Dior Sauvage", "iPhone 17 Pro", "BMW M4", "AK-47 Fire Serpent"]
+    name: "CS2 Skins",
+    price: "$5",
+    image:
+      "https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=1200&auto=format&fit=crop",
   },
   {
-    name: "Tech Box",
-    price: 25,
-    items: ["MacBook Pro", "RTX 6090", "PlayStation 6", "AirPods Max"]
-  }
+    name: "Luxury Perfumes",
+    price: "$20",
+    image:
+      "https://images.unsplash.com/photo-1594035910387-fea47794261f?q=80&w=1200&auto=format&fit=crop",
+  },
+  {
+    name: "Electronics",
+    price: "$50",
+    image:
+      "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1200&auto=format&fit=crop",
+  },
+  {
+    name: "Super Cars",
+    price: "$250",
+    image:
+      "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?q=80&w=1200&auto=format&fit=crop",
+  },
 ];
 
-export default function App() {
-  const [balance, setBalance] = useState(1000);
-  const [result, setResult] = useState("");
-
-  function openCase(box) {
-    if (balance < box.price) {
-      alert("Not enough balance");
-      return;
-    }
-
-    setBalance(balance - box.price);
-
-    const item = box.items[Math.floor(Math.random() * box.items.length)];
-    setResult(item);
-  }
-
+function App() {
   return (
-    <div
-      style={{
-        background: "#0f172a",
-        minHeight: "100vh",
-        color: "white",
-        padding: "40px",
-        fontFamily: "Arial"
-      }}
-    >
-      <h1>Lootbox Demo</h1>
+    <div className="app">
+      <nav className="navbar">
+        <h1>LOOTBOX</h1>
 
-      <h2>Balance: ${balance}</h2>
+        <div className="nav-right">
+          <div className="balance">$12,450</div>
+          <button className="deposit-btn">Deposit</button>
+        </div>
+      </nav>
 
-      <div style={{ display: "flex", gap: "20px" }}>
-        {cases.map((box) => (
-          <div
-            key={box.name}
-            style={{
-              background: "#1e293b",
-              padding: "20px",
-              borderRadius: "12px",
-              width: "250px"
-            }}
-          >
-            <h3>{box.name}</h3>
+      <section className="hero">
+        <h2>Open Premium Mystery Boxes</h2>
+        <p>
+          Win skins, perfumes, electronics, sneakers, watches and even cars.
+        </p>
+      </section>
 
-            <p>Price: ${box.price}</p>
+      <section className="boxes-grid">
+        {boxes.map((box, index) => (
+          <div className="box-card" key={index}>
+            <img src={box.image} alt={box.name} />
 
-            <button
-              onClick={() => openCase(box)}
-              style={{
-                padding: "10px 20px",
-                background: "#7c3aed",
-                border: "none",
-                borderRadius: "8px",
-                color: "white",
-                cursor: "pointer"
-              }}
-            >
-              Open
-            </button>
+            <div className="box-info">
+              <h3>{box.name}</h3>
+              <span>{box.price}</span>
+            </div>
+
+            <button>Open Box</button>
           </div>
         ))}
-      </div>
-
-      {result && (
-        <div style={{ marginTop: "40px" }}>
-          <h2>You won:</h2>
-
-          <p>{result}</p>
-        </div>
-      )}
+      </section>
     </div>
   );
 }
+
+export default App;
