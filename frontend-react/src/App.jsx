@@ -82,7 +82,9 @@ function App() {
 }, []);
 
 useEffect(() => {
-  saveData();
+  if (inventory.length > 0 || balance !== 12450) {
+    saveData();
+  }
 }, [balance, inventory]);
 
 const loadData = async () => {
