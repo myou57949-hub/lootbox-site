@@ -148,7 +148,9 @@ function App() {
             {reward.name}
           </h1>
 
-          <p>{reward.value.toLocaleString()} zł</p>
+          <p>
+            {reward.value.toLocaleString()} zł
+          </p>
         </div>
       )}
 
@@ -181,7 +183,9 @@ function App() {
             >
               <h3>{item.name}</h3>
 
-              <p>{item.value.toLocaleString()} zł</p>
+              <p>
+                {item.value.toLocaleString()} zł
+              </p>
 
               <button
                 onClick={() =>
