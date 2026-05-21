@@ -4,33 +4,55 @@ import { useState } from "react";
 const boxes = [
   {
     name: "Skiny CS2",
-    price: "25 zł",
+    price: 25,
     image:
       "https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=1200&auto=format&fit=crop",
   },
   {
     name: "Luksusowe Perfumy",
-    price: "80 zł",
+    price: 80,
     image:
       "https://images.unsplash.com/photo-1594035910387-fea47794261f?q=80&w=1200&auto=format&fit=crop",
   },
   {
     name: "Elektronika",
-    price: "250 zł",
+    price: 250,
     image:
       "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1200&auto=format&fit=crop",
   },
 ];
 
 const rewards = [
-  { name: "AK-47 Neon Rider", rarity: "rare" },
-  { name: "iPhone 15 Pro", rarity: "epic" },
-  { name: "Mercedes AMG", rarity: "legendary" },
-  { name: "Dior Sauvage", rarity: "rare" },
-  { name: "Rolex Submariner", rarity: "epic" },
-  { name: "AWP Dragon Lore", rarity: "legendary" },
-  { name: "PlayStation 5", rarity: "epic" },
-  { name: "BMW M4", rarity: "legendary" },
+  {
+    name: "AK-47 Neon Rider",
+    rarity: "rare",
+    value: 45,
+  },
+  {
+    name: "iPhone 15 Pro",
+    rarity: "epic",
+    value: 4200,
+  },
+  {
+    name: "Mercedes AMG",
+    rarity: "legendary",
+    value: 250000,
+  },
+  {
+    name: "Dior Sauvage",
+    rarity: "rare",
+    value: 520,
+  },
+  {
+    name: "Rolex Submariner",
+    rarity: "epic",
+    value: 62000,
+  },
+  {
+    name: "AWP Dragon Lore",
+    rarity: "legendary",
+    value: 120000,
+  },
 ];
 
 const rollerItems = [...rewards, ...rewards, ...rewards];
@@ -39,8 +61,16 @@ function App() {
   const [opening, setOpening] = useState(false);
   const [reward, setReward] = useState(null);
   const [inventory, setInventory] = useState([]);
+  const [balance, setBalance] = useState(12450);
 
-  const openBox = () => {
+  const openBox = (price) => {
+    if (balance < price) {
+      alert("Nie masz wystarczającego salda!");
+      return;
+    }
+
+    setBalance((prev) => prev - price);
+
     setOpening(true);
 
     setTimeout(() => {
@@ -58,13 +88,23 @@ function App() {
     }, 3000);
   };
 
+  const sellItem = (index, value) => {
+    setBalance((prev) => prev + value);
+
+    setInventory((prev) =>
+      prev.filter((_, i) => i !== index)
+    );
+  };
+
   return (
     <div className="app">
       <nav className="navbar">
         <h1>LOOTBOX</h1>
 
         <div className="nav-right">
-          <div className="balance">12 450 zł</div>
+          <div className="balance">
+            {balance.toLocaleString()} zł
+          </div>
 
           <button className="deposit-btn">
             Doładuj
@@ -107,6 +147,8 @@ function App() {
           <h1 className={reward.rarity}>
             {reward.name}
           </h1>
+
+          <p>{reward.value.toLocaleString()} zł</p>
         </div>
       )}
 
@@ -118,10 +160,10 @@ function App() {
             <div className="box-info">
               <h3>{box.name}</h3>
 
-              <span>{box.price}</span>
+              <span>{box.price} zł</span>
             </div>
 
-            <button onClick={openBox}>
+            <button onClick={() => openBox(box.price)}>
               Otwórz Skrzynkę
             </button>
           </div>
@@ -137,7 +179,17 @@ function App() {
               className={`inventory-item ${item.rarity}`}
               key={index}
             >
-              {item.name}
+              <h3>{item.name}</h3>
+
+              <p>{item.value.toLocaleString()} zł</p>
+
+              <button
+                onClick={() =>
+                  sellItem(index, item.value)
+                }
+              >
+                Sprzedaj
+              </button>
             </div>
           ))}
         </div>
