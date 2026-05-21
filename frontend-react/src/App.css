@@ -241,3 +241,34 @@ body {
     transform: translateX(-1500px);
   }
 }
+.live-drops {
+  width: 100%;
+  overflow: hidden;
+  background: #0d0d0d;
+  border-bottom: 1px solid #1f1f1f;
+  padding: 14px 0;
+}
+
+.live-track {
+  display: flex;
+  gap: 40px;
+  width: max-content;
+  animation: liveScroll 25s linear infinite;
+}
+
+.live-item {
+  color: #00ffae;
+  font-weight: bold;
+  font-size: 18px;
+  white-space: nowrap;
+}
+
+@keyframes liveScroll {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}

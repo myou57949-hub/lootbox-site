@@ -57,6 +57,14 @@ const rewards = [
 
 const rollerItems = [...rewards, ...rewards, ...rewards];
 
+const liveDrops = [
+  "kuba123 wygrał iPhone 15 Pro",
+  "snajper wygrał AWP Dragon Lore",
+  "adam777 wygrał Rolex Submariner",
+  "mati wygrał Mercedes AMG",
+  "player1337 wygrał PlayStation 5",
+];
+
 function App() {
   const [opening, setOpening] = useState(false);
   const [reward, setReward] = useState(null);
