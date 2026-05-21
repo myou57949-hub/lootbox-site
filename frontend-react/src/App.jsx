@@ -1,4 +1,6 @@
 import "./App.css";
+import { useEffect, useState } from "react";
+
 import { db } from "./firebase";
 
 import {
@@ -6,7 +8,6 @@ import {
   getDoc,
   setDoc,
 } from "firebase/firestore";
-import { useEffect, useState } from "react";
 
 const boxes = [
   {
@@ -74,42 +75,54 @@ const liveDrops = [
 
 function App() {
   const [opening, setOpening] = useState(false);
+
   const [reward, setReward] = useState(null);
+
   const [inventory, setInventory] = useState([]);
+
   const [balance, setBalance] = useState(12450);
+
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
-  loadData();
-}, []);
+    loadData();
+  }, []);
 
-useEffect(() => {
-  if (inventory.length > 0 || balance !== 12450) {
-    saveData();
-  }
-}, [balance, inventory]);
+  useEffect(() => {
+    if (inventory.length > 0 || balance !== 12450) {
+      saveData();
+    }
+  }, [balance, inventory]);
 
-const loadData = async () => {
-  const docRef = doc(db, "users", "player1");
+  const loadData = async () => {
+    const docRef = doc(db, "users", "player1");
 
-  const docSnap = await getDoc(docRef);
+    const docSnap = await getDoc(docRef);
 
-  if (docSnap.exists()) {
-    const data = docSnap.data();
+    if (docSnap.exists()) {
+      const data = docSnap.data();
 
-    setBalance(data.balance || 12450);
-    setInventory(data.inventory || []);
-  }
-};
+      setBalance(data.balance || 12450);
 
-const saveData = async () => {
-  await setDoc(doc(db, "users", "player1"), {
-    balance,
-    inventory,
-  });
-};
+      setInventory(data.inventory || []);
+
+      setLoading(false);
+    } else {
+      setLoading(false);
+    }
+  };
+
+  const saveData = async () => {
+    await setDoc(doc(db, "users", "player1"), {
+      balance,
+      inventory,
+    });
+  };
 
   const openBox = (price) => {
     if (balance < price) {
       alert("Nie masz wystarczającego salda!");
+
       return;
     }
 
@@ -140,9 +153,16 @@ const saveData = async () => {
     );
   };
 
+  if (loading) {
+    return (
+      <div className="loading-screen">
+        Ładowanie...
+      </div>
+    );
+  }
+
   return (
     <div className="app">
-
       <div className="live-drops">
         <div className="live-track">
           {liveDrops.map((drop, index) => (
@@ -152,7 +172,10 @@ const saveData = async () => {
           ))}
 
           {liveDrops.map((drop, index) => (
-            <div className="live-item" key={index + "copy"}>
+            <div
+              className="live-item"
+              key={index + "copy"}
+            >
               🔥 {drop}
             </div>
           ))}
@@ -226,7 +249,9 @@ const saveData = async () => {
               <span>{box.price} zł</span>
             </div>
 
-            <button onClick={() => openBox(box.price)}>
+            <button
+              onClick={() => openBox(box.price)}
+            >
               Otwórz Skrzynkę
             </button>
           </div>
