@@ -106,6 +106,23 @@ function App() {
 
   return (
     <div className="app">
+
+      <div className="live-drops">
+        <div className="live-track">
+          {liveDrops.map((drop, index) => (
+            <div className="live-item" key={index}>
+              🔥 {drop}
+            </div>
+          ))}
+
+          {liveDrops.map((drop, index) => (
+            <div className="live-item" key={index + "copy"}>
+              🔥 {drop}
+            </div>
+          ))}
+        </div>
+      </div>
+
       <nav className="navbar">
         <h1>LOOTBOX</h1>
 
@@ -211,33 +228,3 @@ function App() {
 }
 
 export default App;
-import { useState } from "react";
-import "./App.css";
-
-export default function App() {
-  const [result, setResult] = useState("");
-
-  const openBox = () => {
-    const items = [
-      "AK-47 Redline",
-      "AWP Dragon Lore",
-      "Knife Fade",
-      "USP-S Kill Confirmed"
-    ];
-
-    const win = items[Math.floor(Math.random() * items.length)];
-    setResult("🎉 " + win);
-  };
-
-  return (
-    <div className="container">
-      <h1 className="title">🎁 LOOTBOX</h1>
-
-      <div className="box"></div>
-
-      <button onClick={openBox}>OPEN BOX</button>
-
-      <div className="result">{result}</div>
-    </div>
-  );
-}
