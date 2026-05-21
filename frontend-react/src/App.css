@@ -183,3 +183,41 @@ body {
     transform: rotate(360deg);
   }
 }
+.inventory {
+  width: 90%;
+  margin: 80px auto;
+}
+
+.inventory h2 {
+  margin-bottom: 30px;
+  font-size: 35px;
+}
+
+.inventory-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.inventory-item {
+  padding: 20px;
+  border-radius: 15px;
+  font-weight: bold;
+  text-align: center;
+  border: 2px solid;
+}
+
+.rare {
+  border-color: #3b82f6;
+  color: #3b82f6;
+}
+
+.epic {
+  border-color: #a855f7;
+  color: #a855f7;
+}
+
+.legendary {
+  border-color: #f59e0b;
+  color: #f59e0b;
+}

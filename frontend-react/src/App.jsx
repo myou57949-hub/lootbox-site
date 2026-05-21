@@ -29,29 +29,35 @@ const boxes = [
 ];
 
 const rewards = [
-  "AK-47 Neon Rider",
-  "iPhone 15 Pro",
-  "Mercedes AMG",
-  "Dior Sauvage",
-  "Rolex Submariner",
-  "AWP Dragon Lore",
-  "PlayStation 5",
-  "BMW M4",
+  { name: "AK-47 Neon Rider", rarity: "rare" },
+  { name: "iPhone 15 Pro", rarity: "epic" },
+  { name: "Mercedes AMG", rarity: "legendary" },
+  { name: "Dior Sauvage", rarity: "rare" },
+  { name: "Rolex Submariner", rarity: "epic" },
+  { name: "AWP Dragon Lore", rarity: "legendary" },
+  { name: "PlayStation 5", rarity: "epic" },
+  { name: "BMW M4", rarity: "legendary" },
 ];
 
 function App() {
   const [opening, setOpening] = useState(false);
-  const [reward, setReward] = useState("");
+  const [reward, setReward] = useState(null);
+  const [inventory, setInventory] = useState([]);
 
   const openBox = () => {
     setOpening(true);
-    setReward("");
 
     setTimeout(() => {
       const randomReward =
         rewards[Math.floor(Math.random() * rewards.length)];
 
       setReward(randomReward);
+
+      setInventory((prev) => [
+        randomReward,
+        ...prev,
+      ]);
+
       setOpening(false);
     }, 3000);
   };
@@ -71,8 +77,8 @@ function App() {
         <h2>Otwieraj Premium Skrzynki</h2>
 
         <p>
-          Wygrywaj skiny CS2, perfumy, elektronikę,
-          sneakersy, zegarki i nawet auta.
+          Wygrywaj skiny CS2, perfumy,
+          elektronikę, sneakersy i auta.
         </p>
       </section>
 
@@ -86,7 +92,10 @@ function App() {
       {reward && (
         <div className="reward-popup">
           <h2>🎉 Wygrałeś:</h2>
-          <h1>{reward}</h1>
+
+          <h1 className={reward.rarity}>
+            {reward.name}
+          </h1>
         </div>
       )}
 
@@ -105,6 +114,21 @@ function App() {
             </button>
           </div>
         ))}
+      </section>
+
+      <section className="inventory">
+        <h2>🎒 Twój Ekwipunek</h2>
+
+        <div className="inventory-grid">
+          {inventory.map((item, index) => (
+            <div
+              className={`inventory-item ${item.rarity}`}
+              key={index}
+            >
+              {item.name}
+            </div>
+          ))}
+        </div>
       </section>
     </div>
   );
