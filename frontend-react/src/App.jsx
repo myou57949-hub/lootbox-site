@@ -1,5 +1,12 @@
 import "./App.css";
-import { useState } from "react";
+import { db } from "./firebase";
+
+import {
+  doc,
+  getDoc,
+  setDoc,
+} from "firebase/firestore";
+import { useEffect, useState } from "react";
 
 const boxes = [
   {
@@ -70,6 +77,33 @@ function App() {
   const [reward, setReward] = useState(null);
   const [inventory, setInventory] = useState([]);
   const [balance, setBalance] = useState(12450);
+  useEffect(() => {
+  loadData();
+}, []);
+
+useEffect(() => {
+  saveData();
+}, [balance, inventory]);
+
+const loadData = async () => {
+  const docRef = doc(db, "users", "player1");
+
+  const docSnap = await getDoc(docRef);
+
+  if (docSnap.exists()) {
+    const data = docSnap.data();
+
+    setBalance(data.balance || 12450);
+    setInventory(data.inventory || []);
+  }
+};
+
+const saveData = async () => {
+  await setDoc(doc(db, "users", "player1"), {
+    balance,
+    inventory,
+  });
+};
 
   const openBox = (price) => {
     if (balance < price) {
