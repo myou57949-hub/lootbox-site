@@ -27,7 +27,13 @@ const rewards = [
   { name: "iPhone 15 Pro", rarity: "epic" },
   { name: "Mercedes AMG", rarity: "legendary" },
   { name: "Dior Sauvage", rarity: "rare" },
+  { name: "Rolex Submariner", rarity: "epic" },
+  { name: "AWP Dragon Lore", rarity: "legendary" },
+  { name: "PlayStation 5", rarity: "epic" },
+  { name: "BMW M4", rarity: "legendary" },
 ];
+
+const rollerItems = [...rewards, ...rewards, ...rewards];
 
 function App() {
   const [opening, setOpening] = useState(false);
@@ -59,7 +65,10 @@ function App() {
 
         <div className="nav-right">
           <div className="balance">12 450 zł</div>
-          <button className="deposit-btn">Doładuj</button>
+
+          <button className="deposit-btn">
+            Doładuj
+          </button>
         </div>
       </nav>
 
@@ -74,7 +83,19 @@ function App() {
 
       {opening && (
         <div className="opening-screen">
-          <div className="spinner"></div>
+          <div className="roller">
+            <div className="roller-track">
+              {rollerItems.map((item, index) => (
+                <div
+                  className={`roller-item ${item.rarity}`}
+                  key={index}
+                >
+                  {item.name}
+                </div>
+              ))}
+            </div>
+          </div>
+
           <h2>Otwieranie skrzynki...</h2>
         </div>
       )}
@@ -96,6 +117,7 @@ function App() {
 
             <div className="box-info">
               <h3>{box.name}</h3>
+
               <span>{box.price}</span>
             </div>
 
