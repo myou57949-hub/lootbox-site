@@ -20,12 +20,6 @@ const boxes = [
     image:
       "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1200&auto=format&fit=crop",
   },
-  {
-    name: "Super Auta",
-    price: "1200 zł",
-    image:
-      "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?q=80&w=1200&auto=format&fit=crop",
-  },
 ];
 
 const rewards = [
@@ -33,10 +27,6 @@ const rewards = [
   { name: "iPhone 15 Pro", rarity: "epic" },
   { name: "Mercedes AMG", rarity: "legendary" },
   { name: "Dior Sauvage", rarity: "rare" },
-  { name: "Rolex Submariner", rarity: "epic" },
-  { name: "AWP Dragon Lore", rarity: "legendary" },
-  { name: "PlayStation 5", rarity: "epic" },
-  { name: "BMW M4", rarity: "legendary" },
 ];
 
 function App() {
@@ -78,7 +68,7 @@ function App() {
 
         <p>
           Wygrywaj skiny CS2, perfumy,
-          elektronikę, sneakersy i auta.
+          elektronikę i auta.
         </p>
       </section>
 
