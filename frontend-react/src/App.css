@@ -272,3 +272,52 @@ body {
     transform: translateX(-50%);
   }
 }
+.container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.title {
+  font-size: 40px;
+  text-shadow: 0 0 20px #ff00cc, 0 0 40px #00ffff;
+}
+
+.box {
+  width: 220px;
+  height: 220px;
+  margin: 20px;
+  border-radius: 20px;
+
+  background: linear-gradient(145deg, #ff00cc, #3333ff);
+  box-shadow: 0 0 60px rgba(255,0,200,0.6);
+
+  animation: float 2s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+  100% { transform: translateY(0); }
+}
+
+button {
+  padding: 12px 25px;
+  border: none;
+  border-radius: 10px;
+  background: #ff00cc;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 0 20px #ff00cc;
+}
+
+button:hover {
+  transform: scale(1.05);
+}
+
+.result {
+  margin-top: 20px;
+  font-size: 18px;
+}

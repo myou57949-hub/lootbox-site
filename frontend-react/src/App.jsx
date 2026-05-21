@@ -211,3 +211,33 @@ function App() {
 }
 
 export default App;
+import { useState } from "react";
+import "./App.css";
+
+export default function App() {
+  const [result, setResult] = useState("");
+
+  const openBox = () => {
+    const items = [
+      "AK-47 Redline",
+      "AWP Dragon Lore",
+      "Knife Fade",
+      "USP-S Kill Confirmed"
+    ];
+
+    const win = items[Math.floor(Math.random() * items.length)];
+    setResult("🎉 " + win);
+  };
+
+  return (
+    <div className="container">
+      <h1 className="title">🎁 LOOTBOX</h1>
+
+      <div className="box"></div>
+
+      <button onClick={openBox}>OPEN BOX</button>
+
+      <div className="result">{result}</div>
+    </div>
+  );
+}

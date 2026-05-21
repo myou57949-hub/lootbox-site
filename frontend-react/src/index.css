@@ -34,3 +34,9 @@ a {
 button {
   font-family: inherit;
 }
+body {
+  margin: 0;
+  background: radial-gradient(circle at top, #0b0b1a, #000);
+  font-family: Arial, sans-serif;
+  color: white;
+}
