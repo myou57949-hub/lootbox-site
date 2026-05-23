@@ -158,6 +158,9 @@ body {
   transition: 0.3s;
 }
 
+pointer-events: none;
+
+
 .box-card:hover::before {
   opacity: 1;
 }
@@ -315,4 +318,108 @@ body {
   font-size: 52px;
   font-weight: bold;
   color: #8b5cf6;
+}
+button {
+  position: relative;
+  z-index: 9999;
+  pointer-events: auto;
+}
+
+.box-card {
+  position: relative;
+  z-index: 1;
+}
+
+.box-card::before {
+  pointer-events: none;
+}
+.roller-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.92);
+  z-index: 99999;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  overflow: hidden;
+}
+
+.roller-track {
+  display: flex;
+  gap: 20px;
+
+  animation:
+    roll 3s cubic-bezier(0.1,0.7,0.1,1)
+    forwards;
+}
+
+.roller-item {
+  min-width: 260px;
+  height: 160px;
+
+  border-radius: 24px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  font-weight: 700;
+
+  background: #181818;
+
+  border: 2px solid #7c3aed;
+
+  box-shadow:
+    0 0 25px rgba(124,58,237,0.5);
+}
+
+.roller-item h3 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.roller-item span {
+  color: #00ffcc;
+  font-size: 22px;
+}
+
+.roller-center {
+  position: absolute;
+
+  width: 6px;
+  height: 240px;
+
+  background: #00ffcc;
+
+  box-shadow: 0 0 25px #00ffcc;
+
+  z-index: 10;
+}
+
+.legendary {
+  border-color: gold;
+  box-shadow: 0 0 35px gold;
+}
+
+.epic {
+  border-color: #ff00ff;
+  box-shadow: 0 0 30px #ff00ff;
+}
+
+.rare {
+  border-color: #00aaff;
+  box-shadow: 0 0 30px #00aaff;
+}
+
+@keyframes roll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-2200px);
+  }
 }

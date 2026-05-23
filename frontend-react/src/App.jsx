@@ -1,123 +1,119 @@
 import "./App.css";
+
 import { useEffect, useState } from "react";
 
-import { db } from "./firebase";
-
-import {
-  doc,
-  getDoc,
-  setDoc,
-} from "firebase/firestore";
-
-const boxes = [
-  {
-    name: "Skiny CS2",
-    price: 25,
-    image:
-      "https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=1200&auto=format&fit=crop",
-  },
-  {
-    name: "Luksusowe Perfumy",
-    price: 80,
-    image:
-      "https://images.unsplash.com/photo-1594035910387-fea47794261f?q=80&w=1200&auto=format&fit=crop",
-  },
-  {
-    name: "Elektronika",
-    price: 250,
-    image:
-      "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1200&auto=format&fit=crop",
-  },
-];
-
-const rewards = [
-  {
-    name: "AK-47 Neon Rider",
-    rarity: "rare",
-    value: 45,
-  },
-  {
-    name: "iPhone 15 Pro",
-    rarity: "epic",
-    value: 4200,
-  },
-  {
-    name: "Mercedes AMG",
-    rarity: "legendary",
-    value: 250000,
-  },
-  {
-    name: "Dior Sauvage",
-    rarity: "rare",
-    value: 520,
-  },
-  {
-    name: "Rolex Submariner",
-    rarity: "epic",
-    value: 62000,
-  },
-  {
-    name: "AWP Dragon Lore",
-    rarity: "legendary",
-    value: 120000,
-  },
-];
-
-const rollerItems = [...rewards, ...rewards, ...rewards];
-
-const liveDrops = [
-  "kuba123 wygrał iPhone 15 Pro",
-  "snajper wygrał AWP Dragon Lore",
-  "adam777 wygrał Rolex Submariner",
-  "mati wygrał Mercedes AMG",
-  "player1337 wygrał PlayStation 5",
-];
-
 function App() {
-  const [opening, setOpening] = useState(false);
-
-  const [reward, setReward] = useState(null);
+  const [balance, setBalance] = useState(11960);
 
   const [inventory, setInventory] = useState([]);
 
-  const [balance, setBalance] = useState(12450);
+  const [reward, setReward] = useState(null);
+
+  const [opening, setOpening] = useState(false);
 
   const [loading, setLoading] = useState(true);
 
+  const liveDrops = [
+    "🔥 kuba123 wygrał iPhone 15 Pro",
+    "🔥 sniper wygrał AWP Dragon Lore",
+    "🔥 adam777 wygrał Rolex",
+    "🔥 mati wygrał Mercedes AMG",
+    "🔥 player1337 wygrał PlayStation 5",
+  ];
+
+  const rewards = [
+    {
+      name: "AWP Dragon Lore",
+      value: 4500,
+      rarity: "legendary",
+    },
+
+    {
+      name: "Rolex Submariner",
+      value: 6000,
+      rarity: "legendary",
+    },
+
+    {
+      name: "iPhone 15 Pro",
+      value: 5200,
+      rarity: "epic",
+    },
+
+    {
+      name: "PlayStation 5",
+      value: 2500,
+      rarity: "rare",
+    },
+
+    {
+      name: "Mercedes AMG",
+      value: 15000,
+      rarity: "legendary",
+    },
+
+    {
+      name: "Perfumy Dior",
+      value: 700,
+      rarity: "rare",
+    },
+  ];
+
+  const boxes = [
+    {
+      name: "Gaming Box",
+
+      price: 500,
+
+      image:
+        "https://images.unsplash.com/photo-1542751371-adc38448a05e",
+    },
+
+    {
+      name: "Luxury Box",
+
+      price: 1200,
+
+      image:
+        "https://images.unsplash.com/photo-1523275335684-37898b6baf30",
+    },
+
+    {
+      name: "Tech Box",
+
+      price: 850,
+
+      image:
+        "https://images.unsplash.com/photo-1518770660439-4636190af475",
+    },
+  ];
+
   useEffect(() => {
-    loadData();
+    const savedBalance =
+      localStorage.getItem("balance");
+
+    const savedInventory =
+      localStorage.getItem("inventory");
+
+    if (savedBalance) {
+      setBalance(Number(savedBalance));
+    }
+
+    if (savedInventory) {
+      setInventory(JSON.parse(savedInventory));
+    }
+
+    setLoading(false);
   }, []);
 
   useEffect(() => {
-    if (inventory.length > 0 || balance !== 12450) {
-      saveData();
-    }
+    localStorage.setItem("balance", balance);
+
+    localStorage.setItem(
+      "inventory",
+      JSON.stringify(inventory)
+    );
   }, [balance, inventory]);
-
-  const loadData = async () => {
-    const docRef = doc(db, "users", "player1");
-
-    const docSnap = await getDoc(docRef);
-
-    if (docSnap.exists()) {
-      const data = docSnap.data();
-
-      setBalance(data.balance || 12450);
-
-      setInventory(data.inventory || []);
-
-      setLoading(false);
-    } else {
-      setLoading(false);
-    }
-  };
-
-  const saveData = async () => {
-    await setDoc(doc(db, "users", "player1"), {
-      balance,
-      inventory,
-    });
-  };
 
   const openBox = (price) => {
     if (balance < price) {
@@ -132,7 +128,9 @@ function App() {
 
     setTimeout(() => {
       const randomReward =
-        rewards[Math.floor(Math.random() * rewards.length)];
+        rewards[
+          Math.floor(Math.random() * rewards.length)
+        ];
 
       setReward(randomReward);
 
@@ -156,7 +154,7 @@ function App() {
   if (loading) {
     return (
       <div className="loading-screen">
-        Ładowanie...
+        LOADING...
       </div>
     );
   }
@@ -165,20 +163,16 @@ function App() {
     <div className="app">
       <div className="live-drops">
         <div className="live-track">
-          {liveDrops.map((drop, index) => (
-            <div className="live-item" key={index}>
-              🔥 {drop}
-            </div>
-          ))}
-
-          {liveDrops.map((drop, index) => (
-            <div
-              className="live-item"
-              key={index + "copy"}
-            >
-              🔥 {drop}
-            </div>
-          ))}
+          {[...liveDrops, ...liveDrops].map(
+            (drop, index) => (
+              <div
+                key={index}
+                className="live-item"
+              >
+                {drop}
+              </div>
+            )
+          )}
         </div>
       </div>
 
@@ -200,48 +194,21 @@ function App() {
         <h2>Otwieraj Premium Skrzynki</h2>
 
         <p>
-          Wygrywaj skiny CS2, perfumy,
-          elektronikę i auta.
+          Wygrywaj elektronikę, skiny,
+          auta i luksusowe itemy.
         </p>
       </section>
 
-      {opening && (
-        <div className="opening-screen">
-          <div className="roller">
-            <div className="roller-track">
-              {rollerItems.map((item, index) => (
-                <div
-                  className={`roller-item ${item.rarity}`}
-                  key={index}
-                >
-                  {item.name}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <h2>Otwieranie skrzynki...</h2>
-        </div>
-      )}
-
-      {reward && (
-        <div className="reward-popup">
-          <h2>🎉 Wygrałeś:</h2>
-
-          <h1 className={reward.rarity}>
-            {reward.name}
-          </h1>
-
-          <p>
-            {reward.value.toLocaleString()} zł
-          </p>
-        </div>
-      )}
-
       <section className="boxes-grid">
         {boxes.map((box, index) => (
-          <div className="box-card" key={index}>
-            <img src={box.image} alt={box.name} />
+          <div
+            className="box-card"
+            key={index}
+          >
+            <img
+              src={box.image}
+              alt={box.name}
+            />
 
             <div className="box-info">
               <h3>{box.name}</h3>
@@ -250,7 +217,9 @@ function App() {
             </div>
 
             <button
-              onClick={() => openBox(box.price)}
+              onClick={() =>
+                openBox(box.price)
+              }
             >
               Otwórz Skrzynkę
             </button>
@@ -259,19 +228,17 @@ function App() {
       </section>
 
       <section className="inventory">
-        <h2>🎒 Twój Ekwipunek</h2>
+        <h2>Inventory</h2>
 
         <div className="inventory-grid">
           {inventory.map((item, index) => (
             <div
-              className={`inventory-item ${item.rarity}`}
               key={index}
+              className={`inventory-item ${item.rarity}`}
             >
               <h3>{item.name}</h3>
 
-              <p>
-                {item.value.toLocaleString()} zł
-              </p>
+              <p>{item.value} zł</p>
 
               <button
                 onClick={() =>
@@ -284,6 +251,50 @@ function App() {
           ))}
         </div>
       </section>
+
+      {opening && (
+        <div className="roller-overlay">
+          <div className="roller-center"></div>
+
+          <div className="roller-track">
+            {[...Array(20)].map((_, index) => {
+              const item =
+                rewards[
+                  Math.floor(
+                    Math.random() *
+                      rewards.length
+                  )
+                ];
+
+              return (
+                <div
+                  key={index}
+                  className={`roller-item ${item.rarity}`}
+                >
+                  <h3>{item.name}</h3>
+
+                  <span>
+                    {item.value} zł
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      {reward && !opening && (
+        <div
+          className="reward-popup"
+          onClick={() => setReward(null)}
+        >
+          <h2>Wygrałeś:</h2>
+
+          <h1>{reward.name}</h1>
+
+          <p>{reward.value} zł</p>
+        </div>
+      )}
     </div>
   );
 }
